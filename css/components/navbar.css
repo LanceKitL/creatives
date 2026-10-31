@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
+/* FONT END */
+
+.navigation_bar{
+    position:fixed;
+    backdrop-filter: blur(10px);
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 9999999;
+    border-radius: 10rem;
+    margin: 1rem 6rem;
+}
+
+.navigation_links{
+   display: flex;
+   gap: 2.5rem;
+    
+   li a:hover{
+    text-decoration: underline;
+   }
+}
+
+/* remove the defaults */
+li{
+    list-style: none;
+}
+
+a{
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 800;
+    font-style: normal;
+    text-decoration: none;
+    color: inherit;
+}
+

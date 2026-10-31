@@ -1,0 +1,71 @@
+
+.hero_section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 15rem;
+}
+
+.hero_left{
+    /* border: 1px solid red; */
+    padding: 1rem;
+}
+
+.hero_image{
+    display: block;
+    max-width: min(80vw, 550px);
+    height: auto;
+    animation: hero-parallax linear both;
+    animation-timeline: scroll(root);
+}
+
+@keyframes hero-parallax{
+    from{
+        transform: translateY(0);
+    }
+    to{
+        transform: translateY(20vh);
+    }
+}
+
+section + section{
+    min-height: 100vh;
+}
+
+@media (prefers-reduced-motion: reduce){
+    .hero_image{
+        animation: none;
+    }
+}
+
+.grainy-container {
+  position: relative;
+  display: inline-block;
+  isolation: isolate; /* Prevents the blend-mode from bleeding into the webpage background */
+}
+
+.grainy-container img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* 2. Create the grain overlay using an inline SVG */
+.grainy-container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  
+  /* Inline SVG generating fractal noise */
+  background-image: url(../../noise.svg);
+  
+  /* 3. Blend the noise into the image */
+  mix-blend-mode: soft-light; /* 'overlay', 'soft-light', or 'multiply' work best depending on look */
+  opacity: 0.1;           /* Controls the intensity of the grain */
+  
+  pointer-events: none;    /* Allows clicks to pass through to the image */
+}

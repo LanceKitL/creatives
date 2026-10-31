@@ -1,0 +1,16 @@
+.about{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
+
+.about_image{
+    margin-top: -100px;
+    width: 500px;
+}
+
+.bottom_text{
+    margin-top: -80px;
+    font-size: 2vw;
+}

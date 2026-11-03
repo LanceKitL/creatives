@@ -8,8 +8,6 @@ body{
     background-repeat: no-repeat;
     min-height: 100vh;
     color: rgb(220, 237, 223);
-    cursor: url('./icons8-butterfly-100.png'), auto;
-
 }
 
 html, body{
@@ -50,11 +48,21 @@ body::before {
   font-style: italic;
 }
 
-.spiderman{
-  position: absolute;
-  top: 12rem;
-  right: 5.5rem;
-  img{
-    width: 60px;
-  }
+/* SCROLL WATCHER */
+
+.scroll_watcher{
+  height: 5px;
+  width: 100%;
+  position: fixed;
+  z-index: 9999;
+  background-color:rgb(206, 206, 109);
+  scale: 0 1;
+  transform-origin: left;
+  animation: scroll-watcher linear;
+  animation-timeline: scroll();
+}
+
+@keyframes scroll-watcher {
+  to{scale: 1 1;}
+  
 }

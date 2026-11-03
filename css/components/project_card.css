@@ -1,0 +1,193 @@
+.card_box{
+    display: grid;
+    place-items: center;
+    gap: 1rem;
+
+    .parent_card{
+        display: grid;
+        place-items: center;
+        width: 80%;
+        height: 600px;
+        position: relative;
+
+        /* GENERAL CARD */
+        
+        .card{
+            width: inherit;
+            height: inherit;
+            border-radius: 1rem;
+            position: absolute;
+            transition: all .3s ease-in-out;
+            box-shadow: 5px 5px 18px -9px rgba(0,0,0,0.8);
+            -webkit-box-shadow: 5px 5px 18px -9px rgba(0,0,0,0.8);
+            -moz-box-shadow: 5px 5px 18px -9px rgba(0,0,0,0.8);
+            overflow: hidden;
+        }
+
+        /* CHILD STYLINGS */
+
+        .card:first-child{
+            transition: all .3s ease-in-out;
+            background: url(../../SCILAB.jpg) no-repeat center;
+            filter: grayscale(100);
+            background-size: cover;
+            transform: rotate(2deg);
+            background-color: lightblue;
+        }
+        
+        .card:nth-child(2){
+            transition: all .3s ease-in-out;            
+            background: url(../../AUTOMATIK.jpg) no-repeat center;
+            filter: grayscale(100);
+            background-size: cover;
+            transform: rotate(2deg);
+            top: 5rem;
+            background-color: lightgreen;
+            width: 81%;
+        }        
+
+        .card:nth-child(3){
+            background: url(../../KITVID.jpg) no-repeat center;
+            filter: grayscale(100);
+            background-size: cover;
+            transform: rotate(-1deg);
+            top: 10rem;
+            width: 82%;
+            background-color: lightpink;
+        }
+
+        .card:nth-child(4){
+            background: url(../../PomoKit.png) no-repeat center;
+            background-size: cover;
+            filter: grayscale(100);
+            top: 15rem;
+            width: 83%;
+            background-color: lightgoldenrodyellow;
+        }
+
+        /* HOVER STATE - TRANSFORM */
+        .card:first-child:hover{
+            filter: grayscale(0);
+            transform: translateY(-10rem);
+        }
+                
+        .card:nth-child(2):hover{
+            filter: grayscale(0);
+            transform: translateY(-10rem);
+        }
+                
+        .card:nth-child(3):hover{
+            filter: grayscale(0);
+            transform: translateY(-10rem);
+        }
+                
+        .card:nth-child(4):hover{
+            filter: grayscale(0);
+            transform: translateY(-3rem);
+        }
+
+        /* ANIMATION GENERAL */
+        .card:hover{
+            cursor: pointer;
+        }
+
+        /* CARD NUMBERING */
+        .card:first-child::after{
+            content: "01";
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #3D5A80;
+        }
+
+        .card:nth-child(2)::after{
+            content: "02";
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #3D5A80;
+
+        }
+
+        .card:nth-child(3)::after{
+            content: "03";
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #3D5A80;
+            
+        }
+
+        .card:nth-child(4)::after{
+            content: "04";
+            position: absolute;
+            z-index: 9999;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            color: #3D5A80;
+            font-weight: bold;
+        }
+
+        /* PROJECT TITLES */
+
+        .project_title{
+            padding: 1rem 1.5rem;
+            font-size: 2rem;
+            color: white;
+            font-weight: bold;
+            background-image: linear-gradient(to bottom, rgba(6, 6, 6, 0.641), rgba(9, 9, 9, 0));
+            backdrop-filter: blur(5px);
+        }
+
+        .card:first-child .project_title{
+            transition: all .3s ease-in-out;
+        }
+
+        .card:nth-child(2) .project_title{
+            transition: all .3s ease-in-out;
+        }
+
+        .card:nth-child(3) .project_title{
+            transition: all .3s ease-in-out;
+        }
+
+        .card:nth-child(4) .project_title{
+            transition: all .3s ease-in-out;
+        }
+
+        /* HOVER STATE - TITLE */
+
+        .card:first-child:hover .project_title{
+            color: #3D5A80;
+            font-size: 5rem;
+        }
+  
+        .card:nth-child(2):hover .project_title{
+            color: #3D5A80;
+            font-size: 5rem;
+        }
+
+        .card:nth-child(3):hover .project_title{
+            color: #3D5A80;
+            font-size: 5rem;
+        }
+
+        .card:nth-child(4):hover .project_title{
+            color: #3D5A80;
+            font-size: 5rem;
+        }
+    }
+}
+
+
+/* TOOL TIPS */
+
+
+

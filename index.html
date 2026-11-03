@@ -7,9 +7,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="spiderman">
-        <img src="./spiderman.png" alt="spiderman">
-    </div>
+    <div class="scroll_watcher"></div>
     <nav class="navigation_bar">
         <ul class="navigation_links">
             <li>
@@ -18,56 +16,127 @@
             <li>
                 <a href="#about">About</a>
             </li>
+            <li>
+                <a href="#gallery">Gallery</a>
+            </li>
+            <li>
+                <a href="#contact">Contact</a>
+            </li>
         </ul>
     </nav>
     <section id="hero">
-        <div class="hero_section">
+        <div class="hero_section ">
             <div class="hero_left" style="margin-top: 3.5rem;">
-                <h1 class="redaction-20-bold" style="font-size: 6vw; text-align: center;">It doesn't have to make sense.</h1>
-                <p class="redaction-20-regular" style="text-align: center; font-size: 1.5vw;">
-                    do what makes you <span style="text-decoration: line-through;">happy</span>
+                <h1 class="redaction-20-bold fade_1" style="font-size: 6vw; text-align: center;">This is lance!</h1>
+                <p class="redaction-20-regular fade_2" style="text-align: center; font-size: 1.5vw;">
+                     | Software Engineering | Machine Learning | AI Engineering |
+                    <br>
+                    <br>
                     <span style="padding: 0 .3rem; color: rgb(5, 33, 5); background-color: rgb(206, 206, 109); font-size: 2vw;" class="redaction-20-bold">
-                        YOU
+                        Creative Portfolio
                     </span>
                 </p>
             </div>
-            <div class="grainy_container" style="margin-top: -2rem;">
+            <div class="grainy_container fade_3" style="margin-top: -2rem;">
                 <img class="hero_image" width="800" src="./kit.png" alt="random_image">
             </div>
         </div>
     </section>
+    <!-- ABOUT SECTION -->
     <section id="about" class="about" style="height: fit-content; display: flex; padding: 1rem;">
         <div>
             <h2 class="redaction-20-regular" style="text-align: center; font-size: 3vw;">
                 <span style="color: rgb(206, 206, 109);" class="redaction-20-regular-italic">
-                        Artificial
+                    I won the competition.
                 </span>
-                Intelligence can't replace human creativity
+                 
             </h2>
         </div>
         <div class="grainy_container">
             <img class="about_image" width="800" src="./Firefly.png" alt="random_image">
         </div>
         <p class="redaction-20-regular bottom_text" style="text-align: center;  transform: rotate(-1deg);"> 
-            <span style="font-size: 5vw;">we're made to make mistakes</span> </br>
+            <span style="font-size: 5vw;">the only competitor is me</span> </br>
             <span style="background-color: rgb(206, 206, 109); padding: 0 1rem; color: rgb(5, 48, 5);">
-               and learn from it ⚭
+              ⚭ and myself yesterday ⚭
             </span>
         </p>
         <div>
             <p class="redaction-20-regular" style="text-align: center; font-size: 1.5vw;">
-                Keep going. Build that project. Make bad decisions, and experience 
+                Its been my life motto for years.
             </p>
             </br>
-            <p class="redaction-20-bold" style="color: rgb(206, 206, 109); text-align: center; font-size: 5vw; margin-top: -10px;">LIFE.</p>
         </div>
     </section>
+    
+    <!-- GALLERY_BG -->
+    <section id="gallery" style="background-color: #034223;
+    opacity: 1;
+    background-size: 20px 20px;
+    background-image: repeating-linear-gradient(to right, #0b0c0b, #0b0c0b 1px, #034223 1px, #034223);
+    mask-image: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 75%);
+    -webkit-mask-image: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 75%);
+    mask-size: 100% 100%;
+    -webkit-mask-size: 100% 100%;
+    mask-repeat: no-repeat;
+    -webkit-mask-repeat: no-repeat; display: flex; justify-content: center;align-items: center;">
+
+    <div class="marquee-container">
+    <div class="marquee-track">
+        <div class="marquee-content">
+        PROJECT &nbsp; GALLERY &nbsp;
+        </div>
+
+        <!-- Duplicate for seamless looping -->
+        <div class="marquee-content" aria-hidden="true">
+        PROJECT &nbsp; GALLERY &nbsp;
+        </div>
+    </div>
+    </div>
+    </section>
+    <section>
+        <h1 style="text-align: center; font-size: 5rem; margin-bottom: 10rem;">
+            Proof of Practice
+        </h1>
+        <!-- STACK CARDS FOR PROJECTS AND SUBTLE HOVER ANIMATION -->
+      <div class="card_box">
+          <div class="parent_card">
+            <div class="project_1 card" id="p1">
+                <div class="project_title redaction-20-regular">
+                    SciLab
+
+                </div>
+            </div>
+            <div class="project_2 card" id="p2">
+                  <div class="project_title redaction-20-regular">
+                    AutoMatik
+                  </div>
+            </div>
+            <div class="project_3 card" id="p3">
+                <div class="project_title redaction-20-regular">
+                    KitVid
+                </div>
+            </div>
+            <div class="project_4 card" id="p4">
+                  <div class="project_title redaction-20-regular">
+                    PomoKit
+                  </div>
+
+            </div>
+          </div>
+    </div>
+    </section>
+
+
+    <section id="contact">
+
+    </section>
+
     <footer style="position: sticky;">
         <p style="font-family: 'Ubuntu' sans-serif; margin: 1rem;">
            <a target="_blank" href="https:lancekit.me">@lance</a> - 
             <span>do what you love, everything will follow.</span>
         </p>
-        
     </footer>
 </body>
 </html>

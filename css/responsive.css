@@ -1,0 +1,239 @@
+/* Mobile responsiveness only. Desktop layout is untouched. */
+
+@media (max-width: 900px) {
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
+  section[id] {
+    scroll-margin-top: 5rem;
+  }
+
+  input,
+  textarea {
+    box-sizing: border-box;
+  }
+
+  /* NAVBAR */
+  .navigation_bar {
+    margin: 0.75rem 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 2rem;
+  }
+
+  .navigation_links {
+    justify-content: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+  }
+
+  .navigation_links li a {
+    font-size: 0.95rem;
+  }
+
+  /* HERO */
+  .hero_section {
+    margin-bottom: 6rem;
+    padding-top: 5rem;
+  }
+
+  .hero_left {
+    margin-top: 0 !important;
+    padding: 0 0.5rem;
+  }
+
+  .hero_left h1 {
+    margin: 0 !important;
+    font-size: clamp(2.2rem, 11vw, 3.5rem) !important;
+    line-height: 1.1;
+  }
+
+  .hero_left > p {
+    font-size: 1rem !important;
+    line-height: 1.6;
+    padding: 0 0.5rem;
+  }
+
+  .hero_left > p > span {
+    display: inline-block;
+    margin-top: 0.9rem;
+    padding: 0.25rem 0.5rem !important;
+    font-size: 0.95rem !important;
+  }
+
+  .hero_section > .grainy_container {
+    margin-top: 0.5rem !important;
+  }
+
+  .hero_image {
+    max-width: min(85vw, 500px);
+    margin: 0 auto;
+  }
+
+  /* ABOUT */
+  #about {
+    min-height: auto;
+    padding: 2rem 1rem 3rem !important;
+  }
+
+  .about h2 {
+    font-size: clamp(1.5rem, 7vw, 2.2rem) !important;
+    padding: 0 0.5rem;
+  }
+
+  .about .about_image {
+    width: min(88vw, 500px);
+    margin-top: -2rem;
+  }
+
+  .about .bottom_text {
+    margin-top: -2rem;
+    font-size: 1rem !important;
+    line-height: 1.6;
+    padding: 0 0.5rem;
+  }
+
+  .about .bottom_text > span:first-child {
+    font-size: clamp(1.7rem, 8vw, 2.6rem) !important;
+  }
+
+  .about .bottom_text > span:last-of-type {
+    display: inline-block;
+    margin-top: 0.6rem;
+    font-size: 0.9rem;
+  }
+
+  .about > div:last-child p {
+    font-size: 1rem !important;
+    padding: 0 1rem;
+  }
+
+  /* PROJECT CARDS */
+  .card_box .parent_card {
+    width: 85%;
+    height: 320px;
+    margin-bottom: 7rem;
+  }
+
+  .card_box .parent_card .card:nth-child(2) {
+    top: 2.5rem;
+  }
+
+  .card_box .parent_card .card:nth-child(3) {
+    top: 5rem;
+  }
+
+  .card_box .parent_card .card:nth-child(4) {
+    top: 7.5rem;
+  }
+
+  .card_box .parent_card .project_title {
+    padding: 0.75rem 1rem;
+    font-size: 1.25rem;
+  }
+
+  .card_box .parent_card .card:first-child:hover,
+  .card_box .parent_card .card:nth-child(2):hover,
+  .card_box .parent_card .card:nth-child(3):hover {
+    transform: none;
+  }
+
+  .card_box .parent_card .card:nth-child(4):hover {
+    transform: none;
+  }
+
+  .card_box .parent_card .card:first-child:hover .project_title,
+  .card_box .parent_card .card:nth-child(2):hover .project_title,
+  .card_box .parent_card .card:nth-child(3):hover .project_title,
+  .card_box .parent_card .card:nth-child(4):hover .project_title {
+    color: white;
+    font-size: 1.25rem;
+  }
+
+  /* PROOF OF PRACTICE HEADING */
+  #gallery + section > h1 {
+    font-size: clamp(2rem, 9vw, 3rem) !important;
+    margin-bottom: 3rem !important;
+    padding: 0 1rem;
+  }
+
+  /* CONTACT */
+  .contact_container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 3rem;
+    margin: 6rem 1.25rem 0;
+  }
+
+  .contact_container .left,
+  .contact_container .right {
+    width: 100%;
+  }
+
+  .contact_container .left {
+    gap: 2rem;
+  }
+
+  .contact_container .left h1 {
+    font-size: clamp(2rem, 9vw, 3rem) !important;
+  }
+
+  .contact_container .left .email p,
+  .contact_container .left .phone p {
+    font-size: 1rem;
+  }
+
+  .contact_container .right form {
+    gap: 2rem;
+  }
+
+  .contact_container .right form .upper {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .contact_container .right form .upper .name,
+  .contact_container .right form .upper .email_add {
+    width: 100%;
+  }
+
+  .contact_container .right form .upper .name input,
+  .contact_container .right form .upper .email_add input {
+    width: 100%;
+    max-width: none;
+  }
+
+  .contact_container .right form .message textarea {
+    width: 100%;
+  }
+
+  /* FOOTER */
+  footer {
+    height: auto;
+    min-height: 160px;
+    margin-top: 0;
+  }
+
+  .footer_name {
+    bottom: 0;
+    left: 1rem;
+    right: 1rem;
+  }
+
+  .footer_name h1 {
+    font-size: 20vw;
+    line-height: 0.9;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 380px) {
+  .navigation_links {
+    gap: 0.85rem;
+  }
+
+  .navigation_links li a {
+    font-size: 0.85rem;
+  }
+}

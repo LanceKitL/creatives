@@ -61,7 +61,7 @@ section + section{
   height: 100%;
   
   /* Inline SVG generating fractal noise */
-  background-image: url(../../noise.svg);
+  background-image: url(../../assets/noise.svg);
   
   /* 3. Blend the noise into the image */
   mix-blend-mode: soft-light; /* 'overlay', 'soft-light', or 'multiply' work best depending on look */

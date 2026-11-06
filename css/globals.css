@@ -4,6 +4,7 @@
 @import url(./animation.css);
 @import url(./components/project_card.css);
 @import url(./components/contact.css);
+@import url(./components//footer.css);
 
 *{
     padding: 0;

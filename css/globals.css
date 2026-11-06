@@ -3,3 +3,9 @@
 @import url(./components/about.css);
 @import url(./animation.css);
 @import url(./components/project_card.css);
+@import url(./components/contact.css);
+
+*{
+    padding: 0;
+    margin: 0;
+}

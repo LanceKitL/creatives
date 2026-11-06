@@ -1,0 +1,69 @@
+.contact_container{
+    display: flex;
+    justify-content: space-evenly;
+    margin: 10rem 5rem 0 5rem;
+
+    .left{
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
+
+        .email span, .phone span, .socials span{
+            color: rgb(206, 206, 109);
+        }
+
+        .email p, .phone p{
+            font-size: 2vw;
+        }
+
+        .social_icons{
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+        
+            img{
+                cursor: pointer;
+                transition: all .3 ease-in-out;
+
+                &:hover{
+                    opacity: 80%;
+                }
+            }
+        }
+    }
+
+    .right{
+
+        form{
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+
+            .upper{
+                display: flex;
+                gap: 3rem;
+
+                .name, .email_add{
+                    display: flex;
+                    flex-direction: column;
+                    
+                    span{
+                        color: rgb(206, 206, 109);
+
+                    }
+
+                    input {
+                        padding:  .5rem 1rem;
+                    }
+                }
+
+                
+            }
+        }
+
+
+
+    }
+
+
+}

@@ -6,8 +6,8 @@
     .parent_card{
         display: grid;
         place-items: center;
-        width: 80%;
-        height: 600px;
+        width: 70%;
+        height: 450px;
         position: relative;
 
         /* GENERAL CARD */
@@ -43,7 +43,7 @@
             transform: rotate(2deg);
             top: 5rem;
             background-color: lightgreen;
-            width: 81%;
+            width: 71%;
         }        
 
         .card:nth-child(3){
@@ -52,7 +52,7 @@
             background-size: cover;
             transform: rotate(-1deg);
             top: 10rem;
-            width: 82%;
+            width: 72%;
             background-color: lightpink;
         }
 
@@ -61,7 +61,7 @@
             background-size: cover;
             filter: grayscale(100);
             top: 15rem;
-            width: 83%;
+            width: 73%;
             background-color: lightgoldenrodyellow;
         }
 

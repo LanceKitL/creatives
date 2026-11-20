@@ -1,6 +1,6 @@
 footer{
     height: 30vh;
-    margin-top: -15rem;
+    margin-top: -5rem;
     background-color: linear-gradient(to bottom, #0342234a, #011f10);
     position: relative;
     overflow: hidden;
@@ -10,7 +10,7 @@ footer{
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-bottom: 1rem;
+    padding-bottom: 5rem;
 
     h1{
         color: #034c28;

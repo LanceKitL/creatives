@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Redaction+20:ital,wght@0,400;0,700;1,400&display=swap');
 @import url(./globals.css);
 @import url(./responsive.css);
+html{
+    background-color: #0b0c0b;
+}
+
 body{
     box-sizing: border-box;
     margin: 0;
@@ -27,7 +31,7 @@ body::before {
   height: 100%;
   pointer-events: none;
   z-index: 9999;
-  opacity: 0.25; /* Adjust for more or less grain visibility */
+  opacity: 0.10; /* Adjust for more or less grain visibility */
   background-image: url(../assets/noise.svg);
 }
 

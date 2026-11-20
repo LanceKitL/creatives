@@ -24,8 +24,8 @@
     </div>
 
     <div class="hud-actions">
-      <a class="hud-btn" href="./index.html" title="Back to Portfolio">
-        <span><img src="./assets/icons/back-square-svgrepo-com.svg" alt="arrow_back" width="20"></span>
+      <a class="hud-btn" href="./index.html" title="Back to Portfolio" aria-label="Back to Portfolio">
+        <img class="journal-icon" src="./assets/icons/arrow-left.svg" alt="" aria-hidden="true">
       </a>
     </div>
   </header>
@@ -43,7 +43,9 @@
         <span>Arrow Keys</span>
         <span>Tap Card to Flip</span>
       </div>
-      <button class="start-btn" id="startExploringBtn" type="button">Start Exploring</button>
+      <button class="start-btn" id="startExploringBtn" type="button" aria-label="Start exploring" title="Start exploring">
+        <img class="journal-icon" src="./assets/icons/arrow-right.svg" alt="" aria-hidden="true">
+      </button>
     </div>
   </section>
 
@@ -70,7 +72,9 @@
         <div>
           <div class="reader-top">
             <span id="readerMeta">CH. 01 — TOKYO</span>
-            <button class="reader-close" id="readerCloseBtn" type="button">ESC / CLOSE</button>
+            <button class="reader-close" id="readerCloseBtn" type="button" aria-label="Close journal entry" title="Close">
+              <img class="journal-icon" src="./assets/icons/x.svg" alt="" aria-hidden="true">
+            </button>
           </div>
           <h3 class="reader-title" id="readerTitle">Chapter Title</h3>
           <div class="reader-sub" id="readerSub">Location</div>
@@ -78,8 +82,12 @@
         </div>
 
         <div class="reader-nav">
-          <button type="button" id="readerPrevBtn">&larr; Previous</button>
-          <button type="button" id="readerNextBtn">Next &rarr;</button>
+          <button type="button" id="readerPrevBtn" aria-label="Previous entry" title="Previous entry">
+            <img class="journal-icon" src="./assets/icons/arrow-left.svg" alt="" aria-hidden="true">
+          </button>
+          <button type="button" id="readerNextBtn" aria-label="Next entry" title="Next entry">
+            <img class="journal-icon" src="./assets/icons/arrow-right.svg" alt="" aria-hidden="true">
+          </button>
         </div>
       </div>
     </div>

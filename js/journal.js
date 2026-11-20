@@ -259,11 +259,13 @@ function createCardElement(col, row, key) {
             onerror="this.onerror=null;this.src='https://placehold.co/600x800/132e1c/dcedef?text=${encodeURIComponent(entry.id)}';"
           />
           <span class="card-badge">${entry.id}</span>
-          <span class="card-flip-cue" title="Flip card">&#8635;</span>
-          <div class="card-front-footer">
-            <h2 class="card-front-title">${entry.title}</h2>
-            <span class="card-front-sub">${entry.sub}</span>
-          </div>
+          <span class="card-flip-cue" title="Flip card">
+            <img class="journal-icon" src="./assets/icons/refresh-cw.svg" alt="" aria-hidden="true">
+          </span>
+        </div>
+        <div class="card-front-footer">
+          <h2 class="card-front-title">${entry.title}</h2>
+          <span class="card-front-sub">${entry.sub}</span>
         </div>
       </div>
 
@@ -280,7 +282,9 @@ function createCardElement(col, row, key) {
         </div>
         <div class="back-footer">
           <span>${entry.location}</span>
-          <button type="button" class="expand-story-btn" data-read-index="${entryIndex}">Read Note</button>
+          <button type="button" class="expand-story-btn" data-read-index="${entryIndex}" aria-label="Read note for ${entry.title}" title="Read note">
+            <img class="journal-icon" src="./assets/icons/book-open-text.svg" alt="" aria-hidden="true">
+          </button>
         </div>
       </div>
     </div>

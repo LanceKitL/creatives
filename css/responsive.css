@@ -109,48 +109,6 @@
     padding: 0 1rem;
   }
 
-  /* PROJECT CARDS */
-  .card_box .parent_card {
-    width: 85%;
-    height: 320px;
-    margin-bottom: 7rem;
-  }
-
-  .card_box .parent_card .card:nth-child(2) {
-    top: 2.5rem;
-  }
-
-  .card_box .parent_card .card:nth-child(3) {
-    top: 5rem;
-  }
-
-  .card_box .parent_card .card:nth-child(4) {
-    top: 7.5rem;
-  }
-
-  .card_box .parent_card .project_title {
-    padding: 0.75rem 1rem;
-    font-size: 1.25rem;
-  }
-
-  .card_box .parent_card .card:first-child:hover,
-  .card_box .parent_card .card:nth-child(2):hover,
-  .card_box .parent_card .card:nth-child(3):hover {
-    transform: none;
-  }
-
-  .card_box .parent_card .card:nth-child(4):hover {
-    transform: none;
-  }
-
-  .card_box .parent_card .card:first-child:hover .project_title,
-  .card_box .parent_card .card:nth-child(2):hover .project_title,
-  .card_box .parent_card .card:nth-child(3):hover .project_title,
-  .card_box .parent_card .card:nth-child(4):hover .project_title {
-    color: white;
-    font-size: 1.25rem;
-  }
-
   /* PROOF OF PRACTICE HEADING */
   #gallery + section > h1 {
     font-size: clamp(2rem, 9vw, 3rem) !important;

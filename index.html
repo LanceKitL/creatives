@@ -17,7 +17,7 @@
                 <a href="#about">About</a>
             </li>
             <li>
-                <a href="#gallery">Gallery</a>
+                <a href="#gallery">Projects</a>
             </li>
             <li>
                 <a href="#contact">Contact</a>
@@ -48,7 +48,7 @@
         <div>
             <h2 class="redaction-20-regular" style="text-align: center; font-size: 3vw;">
                 <span style="color: rgb(206, 206, 109);" class="redaction-20-regular-italic">
-                    I won the competition.
+                    I love everything that feeds your soul
                 </span>
                  
             </h2>
@@ -57,15 +57,16 @@
             <img class="about_image" width="800" src="./assets/images/Firefly.png" alt="random_image">
         </div>
         <p class="redaction-20-regular bottom_text" style="text-align: center;  transform: rotate(-1deg);"> 
-            <span style="font-size: 5vw;">the only competitor is me</span> </br>
+            <span style="font-size: 5vw;">be hungry for improvement</span> </br>
             <span style="background-color: rgb(206, 206, 109); padding: 0 1rem; color: rgb(5, 48, 5);">
-              ⚭ and myself yesterday ⚭
+              ⚭ lets get to know each other ⚭
             </span>
         </p>
-        <div>
-            <p class="redaction-20-regular" style="text-align: center; font-size: 1.5vw;">
-                Its been my life motto for years.
-            </p>
+        <div style="margin-top: 1.3rem;">
+
+            <button class="explore-more-btn" id="exploreMoreBtn" type="button">
+                Explore More <img width="24" src="./assets/icons/arrow-up-right-svgrepo-com(1).svg" alt="">
+            </button>
             </br>
         </div>
     </section>
@@ -85,52 +86,71 @@
     <div class="marquee-container">
     <div class="marquee-track">
         <div class="marquee-content">
-        PROJECT &nbsp; GALLERY &nbsp;
+        PROJECTS &nbsp; PROJECTS &nbsp;
         </div>
 
         <!-- Duplicate for seamless looping -->
         <div class="marquee-content" aria-hidden="true">
-        PROJECT &nbsp; GALLERY &nbsp;
+        PROJECTS &nbsp; PROJECTS &nbsp;
         </div>
     </div>
     </div>
     </section>
-    <section style="position: relative;">
-      <div class="card_box">
-          <div class="parent_card">
-            <div class="project_1 card" id="p1">
-                <div class="project_title redaction-20-regular">
-                    SciLab
+    <section class="project_archive_section" aria-labelledby="projectArchiveTitle">
+        <header class="project_archive_header">
+            <p class="project_archive_eyebrow">A selection of things I've built</p>
+            <h2 id="projectArchiveTitle">Project archive</h2>
+            <p>Pick a folder to explore the work inside.</p>
+        </header>
 
-                </div>
-            </div>
-            <div class="project_2 card" id="p2">
-                  <div class="project_title redaction-20-regular">
-                    AutoMatik
-                  </div>
-            </div>
-            <div class="project_3 card" id="p3">
-                <div class="project_title redaction-20-regular">
-                    KitVid
-                </div>
-            </div>
-            <div class="project_4 card" id="p4">
-                  <div class="project_title redaction-20-regular">
-                    PomoKit
-                  </div>
+        <div class="project_archive_stage" id="projectArchive">
+            <div class="project_folder_stack" aria-label="Selected projects">
+                <button class="project_folder" id="p1" type="button" data-project-id="p1" aria-label="Open SciLab project details" aria-haspopup="dialog" aria-controls="projectDialog"
+                    style="--folder-color: #1d5937; --folder-tab-top: 95px; --folder-tab-height: 175px;">
+                    <span class="project_folder_spine">
+                        <span class="project_folder_tab"><span>01</span></span>
+                    </span>
+                    <span class="project_folder_art">
+                        <img src="./assets/images/SCILAB.jpg" alt="" aria-hidden="true">
+                        <span class="project_folder_caption">SciLab</span>
+                    </span>
+                </button>
 
+                <button class="project_folder" id="p2" type="button" data-project-id="p2" aria-label="Open AutoMatik project details" aria-haspopup="dialog" aria-controls="projectDialog"
+                    style="--folder-color: #315d37; --folder-tab-top: 40px; --folder-tab-height: 220px;">
+                    <span class="project_folder_spine">
+                        <span class="project_folder_tab"><span>02</span></span>
+                    </span>
+                    <span class="project_folder_art">
+                        <img src="./assets/images/AUTOMATIK.jpg" alt="" aria-hidden="true">
+                        <span class="project_folder_caption">AutoMatik</span>
+                    </span>
+                </button>
+
+                <button class="project_folder" id="p3" type="button" data-project-id="p3" aria-label="Open KitVid project details" aria-haspopup="dialog" aria-controls="projectDialog"
+                    style="--folder-color: #425d2c; --folder-tab-top: 95px; --folder-tab-height: 175px;">
+                    <span class="project_folder_spine">
+                        <span class="project_folder_tab"><span>03</span></span>
+                    </span>
+                    <span class="project_folder_art">
+                        <img src="./assets/images/KITVID.jpg" alt="" aria-hidden="true">
+                        <span class="project_folder_caption">KitVid</span>
+                    </span>
+                </button>
+
+                <button class="project_folder" id="p4" type="button" data-project-id="p4" aria-label="Open PomoKit project details" aria-haspopup="dialog" aria-controls="projectDialog"
+                    style="--folder-color: #174630; --folder-tab-top: 40px; --folder-tab-height: 195px;">
+                    <span class="project_folder_spine">
+                        <span class="project_folder_tab"><span>04</span></span>
+                    </span>
+                    <span class="project_folder_art">
+                        <img src="./assets/images/PomoKit.png" alt="" aria-hidden="true">
+                        <span class="project_folder_caption">PomoKit</span>
+                    </span>
+                </button>
             </div>
 
-          </div>
-    </div>
-    <div style="position: absolute; bottom: 0; left: 0; right: 0; display: grid; place-items: center;">
-        <button
-        class="explore-more-btn" 
-        id="exploreMoreBtn" 
-        type="button">
-            Explore More <img width="24" src="./assets/icons/arrow-up-right-svgrepo-com(1).svg"/>
-        </button>
-    </div>
+        </div>
 
     </section>
 
@@ -195,11 +215,37 @@
         </div>
     </footer>
 
-    <!-- POP_UP CONTENT -->
-    <div id="pop_up" style="display: none; position: fixed; inset: 0; place-items: center;">
-        <div style="color: white;" id="project_content"></div>
-        <button style="position:absolute; top: 1rem; right: 1rem; border: none; background-color: transparent; cursor: pointer; font-size: 2vw;" onclick="closeProject()">❌</button>
-    </div>
+    <dialog class="project_dialog" id="projectDialog" aria-labelledby="projectDialogTitle">
+        <div class="project_dialog_media" id="projectDialogMedia">
+            <span class="project_dialog_index" id="projectDialogIndex"></span>
+            <img id="projectDialogImage" src="" alt="">
+        </div>
+        <div class="project_dialog_content">
+            <button class="project_dialog_close" type="button" aria-label="Close project details">×</button>
+            <div class="project_dialog_intro">
+                <p class="project_dialog_eyebrow" id="projectDialogCategory"></p>
+                <h2 id="projectDialogTitle"></h2>
+                <p class="project_dialog_description" id="projectDialogDescription"></p>
+            </div>
+            <div class="project_dialog_details">
+                <h3>Built with</h3>
+                <ul class="project_dialog_tech" id="projectDialogTech"></ul>
+                <footer class="project_dialog_footer">
+                    <a class="project_dialog_link" id="projectDialogLink" href="" target="_blank" rel="noopener noreferrer">
+                        View GitHub repository <img class="project_dialog_icon" src="./assets/icons/external-link.svg" alt="" aria-hidden="true">
+                    </a>
+                    <div class="project_dialog_nav" aria-label="Browse projects">
+                        <button class="project_dialog_nav_button" id="previousProject" type="button" aria-label="Previous project">
+                            <img class="project_dialog_icon" src="./assets/icons/arrow-left.svg" alt="" aria-hidden="true">
+                        </button>
+                        <button class="project_dialog_nav_button" id="nextProject" type="button" aria-label="Next project">
+                            <img class="project_dialog_icon" src="./assets/icons/arrow-right.svg" alt="" aria-hidden="true">
+                        </button>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </dialog>
     <script src="./js/utils.js"></script>
 </body>
 </html>

@@ -62,7 +62,7 @@
 
 /* PROJECTS */
 
-.card_box{
+.project_archive_section{
   animation: fadeIn ease-in-out;
   animation-timeline: view();
   animation-range-start: cover;

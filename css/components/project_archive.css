@@ -1,0 +1,558 @@
+.project_archive_section{
+  position: relative;
+  padding: clamp(4rem, 8vw, 7rem) 1rem 5rem;
+  overflow: hidden;
+  border-radius: 2rem;
+  color: rgb(220, 237, 223);
+  background:
+    radial-gradient(ellipse at 74% 52%, rgba(3, 66, 35, 0.52), transparent 58%),
+    linear-gradient(
+      to bottom,
+      rgba(3, 66, 35, 0) 0%,
+      rgba(3, 66, 35, 0.55) 50%,
+      rgba(3, 66, 35, 0) 100%
+    );
+}
+
+.project_archive_header{
+  position: relative;
+  z-index: 1;
+  margin: 0 auto 2rem;
+  text-align: center;
+}
+
+.project_archive_eyebrow,
+.project_dialog_eyebrow{
+  color: rgb(206, 206, 109);
+  font-size: 0.9rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.project_archive_header h2{
+  margin: 0.4rem 0;
+  font-size: clamp(2.4rem, 6vw, 4.5rem);
+}
+
+.project_archive_header > p:last-child{
+  color: rgba(220, 237, 223, 0.78);
+}
+
+.project_archive_stage{
+  position: relative;
+  width: min(100%, 1100px);
+  height: clamp(26rem, 52vw, 40rem);
+  min-height: 26rem;
+  margin: 0 auto;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 75% 48%, rgba(3, 66, 35, 0.65), transparent 55%),
+    #0b0c0b;
+  border: 1px solid rgba(206, 206, 109, 0.2);
+  border-radius: 1rem;
+  box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.45);
+}
+
+.project_folder_stack{
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.project_folder{
+  position: absolute;
+  inset: 0 auto 0 var(--folder-left);
+  z-index: var(--folder-z);
+  display: flex;
+  width: var(--folder-width, 165px);
+  padding: 0;
+  overflow: visible;
+  color: inherit;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), filter 0.3s ease;
+  will-change: transform;
+}
+
+#p1{
+  --folder-left: 0%;
+  --folder-width: 26.5%;
+  --folder-z: 50;
+}
+
+#p2{
+  --folder-left: 24.5%;
+  --folder-width: 26.5%;
+  --folder-z: 40;
+}
+
+#p3{
+  --folder-left: 49%;
+  --folder-width: 26.5%;
+  --folder-z: 30;
+}
+
+#p4{
+  --folder-left: 73.5%;
+  --folder-width: 26.5%;
+  --folder-z: 20;
+}
+
+.project_folder:not(.is-active):hover{
+  transform: translateX(18px);
+}
+
+.project_folder.is-active{
+  z-index: 70;
+  transform: translateX(48px);
+  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#p4.is-active{
+  transform: translateX(-48px);
+}
+
+.project_folder:focus-visible,
+.project_dialog button:focus-visible,
+.project_dialog_link:focus-visible{
+  outline: 3px solid rgb(206, 206, 109);
+  outline-offset: 4px;
+}
+
+.project_folder_spine{
+  position: relative;
+  z-index: 2;
+  width: var(--folder-spine-width, 18px);
+  height: 100%;
+  flex: 0 0 var(--folder-spine-width, 18px);
+  background: linear-gradient(180deg, #cece6d, #8b9140);
+  box-shadow: 0.35rem 0 1.3rem rgba(0, 0, 0, 0.38);
+}
+
+.project_folder_tab{
+  position: absolute;
+  top: var(--folder-tab-top);
+  right: -28px;
+  display: grid;
+  width: 29px;
+  height: var(--folder-tab-height);
+  place-items: center;
+  background: rgb(206, 206, 109);
+  clip-path: polygon(0 0, 100% 8%, 100% 92%, 0 100%);
+  filter: drop-shadow(0.3rem 0.25rem 0.5rem rgba(0, 0, 0, 0.35));
+}
+
+.project_folder_tab span{
+  color: #0b0c0b;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+.project_folder_art{
+  position: relative;
+  display: block;
+  height: 100%;
+  flex: 1;
+  overflow: hidden;
+  background: var(--folder-color);
+  box-shadow: inset 0.75rem 0 1.5rem -0.6rem rgba(0, 0, 0, 0.75);
+}
+
+.project_folder_art::after{
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 48%, rgba(5, 23, 12, 0.78));
+  content: "";
+}
+
+.project_folder_art img{
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: grayscale(1) contrast(1.12);
+  opacity: 0.78;
+  mix-blend-mode: screen;
+  transition: filter 0.35s ease, opacity 0.35s ease, transform 0.6s ease;
+}
+
+.project_folder:hover .project_folder_art img,
+.project_folder.is-active .project_folder_art img{
+  filter: grayscale(0.25) contrast(1.08);
+  opacity: 1;
+  transform: scale(1.035);
+}
+
+.project_folder_caption{
+  position: absolute;
+  z-index: 1;
+  right: 0.85rem;
+  bottom: 4.25rem;
+  left: 0.85rem;
+  color: rgb(220, 237, 223);
+  font-size: clamp(1rem, 1.5vw, 1.3rem);
+  font-weight: 700;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
+}
+
+.project_archive_section > .explore-more-btn{
+  position: relative;
+  display: flex;
+  margin: 2rem auto 0;
+}
+
+.project_dialog,
+.project_dialog *{
+  box-sizing: border-box;
+}
+
+.project_dialog{
+  position: fixed;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  width: min(54rem, calc(100% - 2rem));
+  height: min(90vh, 48rem);
+  max-height: min(90vh, 48rem);
+  margin: auto;
+  padding: 0;
+  overflow: hidden;
+  color: rgb(220, 237, 223);
+  background: #0b0c0b;
+  border: 1px solid rgba(206, 206, 109, 0.5);
+  border-radius: 1rem;
+  box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.72);
+  font-family: inherit;
+}
+
+.project_dialog:not([open]){
+  display: none;
+}
+
+.project_dialog[open]{
+  display: grid;
+}
+
+.project_dialog::backdrop{
+  background: rgba(4, 12, 7, 0.82);
+  backdrop-filter: blur(8px);
+}
+
+.project_dialog_media{
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background: #034223;
+}
+
+.project_dialog_media img{
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(0.78);
+}
+
+.project_dialog_index{
+  position: absolute;
+  z-index: 1;
+  top: 1rem;
+  left: 1rem;
+  padding: 0.45rem 0.7rem;
+  color: #0b0c0b;
+  background: rgb(206, 206, 109);
+  border-radius: 0.3rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.project_dialog_content{
+  position: relative;
+  z-index: 1;
+  grid-column: 1;
+  grid-row: 1;
+  display: flex;
+  justify-self: end;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 0;
+  width: min(52%, 28rem);
+  height: 100%;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  overflow-y: auto;
+  background: rgba(11, 12, 11, 0.68);
+  backdrop-filter: blur(3px);
+}
+
+.project_dialog_intro{
+  margin-bottom: clamp(1.5rem, 4vh, 2.25rem);
+}
+
+.project_dialog_details{
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.project_dialog_close{
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 2.4rem;
+  height: 2.4rem;
+  color: rgb(220, 237, 223);
+  background: rgba(220, 237, 223, 0.06);
+  border: 1px solid rgba(220, 237, 223, 0.25);
+  border-radius: 50%;
+  cursor: pointer;
+  font: inherit;
+  font-size: 1.5rem;
+  line-height: 1;
+  transition: color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.project_dialog_close:hover{
+  color: #0b0c0b;
+  background: rgb(206, 206, 109);
+  transform: rotate(90deg);
+}
+
+.project_dialog_eyebrow{
+  margin: 0 2.5rem 0.75rem 0;
+  font-size: 0.72rem;
+}
+
+.project_dialog h2{
+  margin: 0 2.5rem 1rem 0;
+  color: rgb(220, 237, 223);
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.05;
+}
+
+.project_dialog_description{
+  color: rgba(220, 237, 223, 0.82);
+  line-height: 1.7;
+}
+
+.project_dialog h3{
+  margin: 0 0 0.7rem;
+  color: rgb(206, 206, 109);
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+.project_dialog_tech{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  padding: 0;
+  list-style: none;
+}
+
+.project_dialog_tech li{
+  padding: 0.35rem 0.65rem;
+  color: rgb(220, 237, 223);
+  background: rgba(3, 66, 35, 0.55);
+  border: 1px solid rgba(206, 206, 109, 0.24);
+  border-radius: 999px;
+  font-size: 0.8rem;
+}
+
+.project_dialog_footer{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  height: auto;
+  min-height: 0;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+  padding-top: 1.2rem;
+  position: static;
+  overflow: visible;
+  background: transparent;
+  border-top: 1px solid rgba(220, 237, 223, 0.12);
+}
+
+.project_dialog_link{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0.65rem 0.9rem;
+  color: #0b0c0b;
+  background: rgb(206, 206, 109);
+  border-radius: 0.45rem;
+  font-size: 0.9rem;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.project_dialog_icon{
+  display: block;
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 1rem;
+  object-fit: contain;
+}
+
+.project_dialog_link:hover{
+  background: rgb(224, 224, 150);
+  transform: translateX(3px);
+}
+
+.project_dialog_nav{
+  display: flex;
+  gap: 0.45rem;
+}
+
+.project_dialog_nav_button{
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  place-items: center;
+  color: rgb(220, 237, 223);
+  background: transparent;
+  border: 1px solid rgba(220, 237, 223, 0.25);
+  border-radius: 0.45rem;
+  cursor: pointer;
+  font: inherit;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.project_dialog_nav_button:hover{
+  background: rgba(206, 206, 109, 0.18);
+  border-color: rgb(206, 206, 109);
+}
+
+@media (max-width: 768px){
+  .project_archive_section{
+    padding-right: 0.75rem;
+    padding-left: 0.75rem;
+  }
+
+  .project_archive_stage{
+    height: min(72vh, 40rem);
+    min-height: 24rem;
+  }
+
+  #p1{
+    --folder-spine-width: 14px;
+  }
+
+  #p2{
+    --folder-spine-width: 14px;
+  }
+
+  #p3{
+    --folder-spine-width: 14px;
+  }
+
+  #p4{
+    --folder-spine-width: 14px;
+  }
+
+  .project_folder.is-active{
+    transform: translateX(24px);
+  }
+
+  #p4.is-active{
+    transform: translateX(-24px);
+  }
+
+  .project_folder_tab{
+    right: -22px;
+    width: 23px;
+  }
+
+  .project_folder_caption{
+    display: none;
+  }
+
+  .project_dialog{
+    height: min(90vh, 48rem);
+  }
+
+  .project_dialog_content{
+    align-self: end;
+    justify-self: stretch;
+    width: 100%;
+    height: auto;
+    max-height: 74%;
+    padding: 1.5rem 1.25rem;
+  }
+
+  .project_dialog_intro{
+    margin-bottom: 1.5rem;
+  }
+
+  .project_dialog_details{
+    flex: none;
+  }
+
+  .project_dialog_footer{
+    margin-top: 1.5rem;
+  }
+}
+
+@media (max-width: 420px){
+  .project_archive_header > p:last-child{
+    max-width: 18rem;
+    margin: 0 auto;
+  }
+
+  .project_dialog_footer{
+    gap: 0.5rem;
+  }
+
+  .project_dialog_link{
+    gap: 0.35rem;
+    padding-right: 0.75rem;
+    padding-left: 0.75rem;
+    font-size: 0.75rem;
+  }
+
+  .project_dialog_nav_button{
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  .project_dialog_icon{
+    width: 0.9rem;
+    height: 0.9rem;
+    flex-basis: 0.9rem;
+  }
+}
+
+@media (max-width: 360px){
+  .project_dialog_footer{
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .project_dialog_nav{
+    align-self: flex-end;
+  }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .project_folder,
+  .project_folder_art img,
+  .project_dialog_link,
+  .project_dialog_close{
+    transition-duration: 0.01ms;
+  }
+}

@@ -1,6 +1,6 @@
 footer{
     height: 30vh;
-    margin-top: -5rem;
+    margin-top: 5rem;
     background-color: linear-gradient(to bottom, #0342234a, #011f10);
     position: relative;
     overflow: hidden;
@@ -17,6 +17,8 @@ footer{
         margin: 0;
         padding: 0;
         font-size: 20vw;
+        position: absolute;
+        bottom: -5rem;
     }
 }
 /* REM, PX, VW */

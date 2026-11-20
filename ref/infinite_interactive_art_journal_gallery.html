@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Infinite Art Journal Gallery — Half of Eight Style</title>
+
+  <!-- Editorial & Japanese Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Serif+JP:wght@300;400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ==========================================================================
+       1. DESIGN TOKENS & BASE RESET
+       ========================================================================== */
+    :root {
+      --bg-canvas: #f4f2ed;
+      --bg-paper: #fcfbf8;
+      --bg-card-back: #181817;
+      --ink-primary: #161615;
+      --ink-secondary: #686661;
+      --ink-muted: #9e9b93;
+      --ink-inverse: #f4f2ed;
+      --accent-vermilion: #d9432e;
+      --border-hairline: rgba(22, 22, 21, 0.12);
+      --border-inverse: rgba(244, 242, 237, 0.14);
+
+      /* Responsive Card Sizing */
+      --card-w: clamp(230px, 24vw, 320px);
+      --card-h: calc(var(--card-w) * 1.3333); /* Strict 3:4 aspect ratio */
+      --grid-gap: clamp(18px, 2.4vw, 34px);
+
+      /* Typography */
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-jp: 'Noto Serif JP', serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: var(--bg-canvas);
+      color: var(--ink-primary);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: none; /* Handled natively by our custom inertia engine */
+    }
+
+    /* Subtle analog paper grain overlay */
+    .paper-grain {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 90;
+      opacity: 0.032;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
+    /* ==========================================================================
+       2. EDITORIAL HUD (HEADER & FOOTER CONTROLS)
+       ========================================================================== */
+    .hud-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 40;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: clamp(16px, 2.4vw, 28px);
+      pointer-events: none;
+    }
+
+    .hud-brand {
+      pointer-events: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      background: rgba(244, 242, 237, 0.82);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 10px 14px;
+      border: 1px solid var(--border-hairline);
+      border-radius: 6px;
+    }
+
+    .hud-jp {
+      font-family: var(--font-jp);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      color: var(--accent-vermilion);
+      font-weight: 600;
+    }
+
+    .hud-title {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-primary);
+    }
+
+    .hud-actions {
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .hud-btn {
+      appearance: none;
+      background: rgba(244, 242, 237, 0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid var(--border-hairline);
+      border-radius: 6px;
+      padding: 9px 14px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink-primary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hud-btn:hover {
+      background: var(--ink-primary);
+      color: var(--ink-inverse);
+      border-color: var(--ink-primary);
+    }
+
+    .hud-footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 40;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding: clamp(16px, 2.4vw, 28px);
+      pointer-events: none;
+    }
+
+    .hud-telemetry,
+    .hud-hint {
+      pointer-events: auto;
+      background: rgba(244, 242, 237, 0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid var(--border-hairline);
+      border-radius: 6px;
+      padding: 8px 13px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--ink-secondary);
+      letter-spacing: 0.04em;
+    }
+
+    .hud-hint {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pulse-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: var(--accent-vermilion);
+      animation: pulse 2s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.35; transform: scale(0.9); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    @media (max-width: 640px) {
+      .hud-hint {
+        display: none;
+      }
+    }
+
+    /* ==========================================================================
+       3. INTRO OVERLAY (EDITORIAL ZINE COVER)
+       ========================================================================== */
+    .intro-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 70;
+      background: rgba(244, 242, 237, 0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.65s ease;
+    }
+
+    .intro-overlay.is-hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .intro-card {
+      max-width: 540px;
+      width: 100%;
+      background: var(--bg-paper);
+      border: 1px solid var(--border-hairline);
+      border-radius: 10px;
+      padding: clamp(28px, 5vw, 48px);
+      box-shadow: 0 24px 60px -15px rgba(22, 22, 21, 0.08);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .intro-jp {
+      font-family: var(--font-jp);
+      font-size: 13px;
+      letter-spacing: 0.25em;
+      color: var(--accent-vermilion);
+      font-weight: 600;
+    }
+
+    .intro-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(32px, 5vw, 46px);
+      font-weight: 400;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      color: var(--ink-primary);
+    }
+
+    .intro-desc {
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--ink-secondary);
+      max-width: 42ch;
+    }
+
+    .intro-meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      padding-top: 6px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ink-muted);
+    }
+
+    .intro-meta span {
+      padding: 4px 9px;
+      border: 1px solid var(--border-hairline);
+      border-radius: 4px;
+    }
+
+    .start-btn {
+      margin-top: 8px;
+      appearance: none;
+      background: var(--ink-primary);
+      color: var(--ink-inverse);
+      border: 1px solid var(--ink-primary);
+      border-radius: 6px;
+      padding: 14px 28px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+
+    .start-btn:hover {
+      background: var(--accent-vermilion);
+      border-color: var(--accent-vermilion);
+      transform: translateY(-2px);
+    }
+
+    /* ==========================================================================
+       4. INFINITE CANVAS & 3D FLIPPING 3x4 JOURNAL CARDS
+       ========================================================================== */
+    .infinite-viewport {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      cursor: grab;
+    }
+
+    .infinite-viewport.is-dragging {
+      cursor: grabbing;
+    }
+
+    .tile-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      will-change: transform;
+    }
+
+    /* Individual virtual card wrapper positioned via translate3d */
+    .journal-slot {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: var(--card-w);
+      height: var(--card-h);
+      perspective: 1400px;
+      will-change: transform;
+    }
+
+    .journal-card {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.78s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.4s ease;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+
+    .journal-slot:hover .journal-card:not(.is-flipped) {
+      transform: translateY(-4px) rotateX(1.5deg) rotateY(-1.5deg);
+    }
+
+    .journal-card.is-flipped {
+      transform: rotateY(180deg);
+    }
+
+    /* Shared Face Styling */
+    .card-face {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border-hairline);
+      box-shadow: 0 12px 30px -10px rgba(22, 22, 21, 0.12);
+    }
+
+    /* FRONT FACE: 3:4 Visual Artwork / Snapshot */
+    .card-front {
+      background-color: var(--bg-paper);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-media {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #e6e2d8;
+    }
+
+    .card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+      pointer-events: none;
+    }
+
+    .journal-slot:hover .card-media img {
+      transform: scale(1.04);
+    }
+
+    /* Editorial Top-Left Chapter Tag & Bottom Caption Bar */
+    .card-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(252, 251, 248, 0.88);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(22, 22, 21, 0.1);
+      border-radius: 4px;
+      padding: 4px 8px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: var(--ink-primary);
+    }
+
+    .card-flip-cue {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: rgba(22, 22, 21, 0.68);
+      color: var(--ink-inverse);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      opacity: 0;
+      transform: scale(0.85);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+
+    .journal-slot:hover .card-flip-cue {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .card-front-footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 36px 14px 14px;
+      background: linear-gradient(to top, rgba(18, 18, 17, 0.82) 0%, rgba(18, 18, 17, 0.38) 60%, transparent 100%);
+      color: var(--ink-inverse);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 8px;
+    }
+
+    .card-front-title {
+      font-family: var(--font-serif);
+      font-size: 19px;
+      font-weight: 500;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+    }
+
+    .card-front-jp {
+      font-family: var(--font-jp);
+      font-size: 11px;
+      opacity: 0.85;
+      white-space: nowrap;
+    }
+
+    /* BACK FACE: Accompanying Zine Story & Field Notes */
+    .card-back {
+      background-color: var(--bg-card-back);
+      color: var(--ink-inverse);
+      transform: rotateY(180deg);
+      border-color: var(--border-inverse);
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .back-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-inverse);
+      padding-bottom: 10px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      color: var(--ink-muted);
+    }
+
+    .back-chapter {
+      color: var(--accent-vermilion);
+      font-weight: 500;
+    }
+
+    .back-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px 0;
+      overflow-y: auto;
+    }
+
+    .back-jp-heading {
+      font-family: var(--font-jp);
+      font-size: 12px;
+      color: #c8c4b8;
+      letter-spacing: 0.12em;
+    }
+
+    .back-title {
+      font-family: var(--font-serif);
+      font-size: clamp(20px, 2vw, 24px);
+      font-weight: 400;
+      line-height: 1.15;
+      color: #ffffff;
+    }
+
+    .back-story {
+      font-size: 12.5px;
+      line-height: 1.62;
+      color: rgba(244, 242, 237, 0.78);
+      font-weight: 300;
+    }
+
+    .back-footer {
+      border-top: 1px solid var(--border-inverse);
+      padding-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--ink-muted);
+    }
+
+    .expand-story-btn {
+      appearance: none;
+      background: rgba(244, 242, 237, 0.1);
+      border: 1px solid rgba(244, 242, 237, 0.2);
+      color: var(--ink-inverse);
+      border-radius: 4px;
+      padding: 4px 8px;
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .expand-story-btn:hover {
+      background: var(--accent-vermilion);
+      border-color: var(--accent-vermilion);
+    }
+
+    /* ==========================================================================
+       5. FULL-STORY READER MODAL (OPTIONAL DEEP DIVE)
+       ========================================================================== */
+    .reader-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      background: rgba(18, 18, 17, 0.72);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.35s ease, visibility 0.35s ease;
+    }
+
+    .reader-modal.is-open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .reader-sheet {
+      background: var(--bg-paper);
+      color: var(--ink-primary);
+      max-width: 780px;
+      width: 100%;
+      max-height: 88vh;
+      border-radius: 10px;
+      border: 1px solid var(--border-hairline);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.35);
+      transform: translateY(16px);
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .reader-modal.is-open .reader-sheet {
+      transform: translateY(0);
+    }
+
+    @media (max-width: 720px) {
+      .reader-sheet {
+        grid-template-columns: 1fr;
+        overflow-y: auto;
+      }
+    }
+
+    .reader-image-pane {
+      background: #e5e1d8;
+      min-height: 280px;
+    }
+
+    .reader-image-pane img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .reader-content-pane {
+      padding: clamp(22px, 4vw, 36px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 18px;
+      overflow-y: auto;
+    }
+
+    .reader-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--accent-vermilion);
+    }
+
+    .reader-close {
+      appearance: none;
+      background: transparent;
+      border: 1px solid var(--border-hairline);
+      border-radius: 5px;
+      padding: 5px 10px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      cursor: pointer;
+      color: var(--ink-primary);
+    }
+
+    .reader-close:hover {
+      background: var(--ink-primary);
+      color: var(--ink-inverse);
+    }
+
+    .reader-title {
+      font-family: var(--font-serif);
+      font-size: clamp(28px, 3.5vw, 36px);
+      line-height: 1.12;
+      margin-top: 6px;
+    }
+
+    .reader-jp {
+      font-family: var(--font-jp);
+      font-size: 13px;
+      color: var(--ink-secondary);
+      margin-top: 4px;
+    }
+
+    .reader-text {
+      font-size: 14.5px;
+      line-height: 1.75;
+      color: var(--ink-secondary);
+      margin-top: 14px;
+    }
+
+    .reader-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-hairline);
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+
+    .reader-nav button {
+      appearance: none;
+      background: none;
+      border: 1px solid var(--border-hairline);
+      border-radius: 5px;
+      padding: 7px 12px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      cursor: pointer;
+      color: var(--ink-primary);
+    }
+
+    .reader-nav button:hover {
+      background: var(--ink-primary);
+      color: var(--ink-inverse);
+    }
+  </style>
+</head>
+<body>
+  <div class="paper-grain"></div>
+
+  <!-- Minimalist Editorial Header -->
+  <header class="hud-header">
+    <div class="hud-brand">
+      <span class="hud-jp">日誌の半分。</span>
+      <h1 class="hud-title">Half of the Journal — Archive</h1>
+    </div>
+
+    <div class="hud-actions">
+      <button class="hud-btn" id="flipAllBtn" type="button" title="Flip visible cards">
+        <span>Flip All</span>
+      </button>
+      <button class="hud-btn" id="resetPosBtn" type="button" title="Return to origin (0,0)">
+        <span>Center</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Intro Cover Overlay -->
+  <section class="intro-overlay" id="introOverlay" aria-label="Journal Introduction">
+    <div class="intro-card">
+      <div class="intro-jp">日誌の半分。 HALF OF THE JOURNAL</div>
+      <h2 class="intro-heading">Visual Fragments &amp; Field Notes</h2>
+      <p class="intro-desc">
+        An infinite 2D canvas displaying 3&times;4 visual snapshots and their accompanying stories on the flip side. Chapters capture quiet encounters, street typography, and architectural moments.
+      </p>
+      <div class="intro-meta">
+        <span>Drag / Scroll</span>
+        <span>Arrow Keys</span>
+        <span>Tap Card to Flip</span>
+      </div>
+      <button class="start-btn" id="startExploringBtn" type="button">Start Exploring</button>
+    </div>
+  </section>
+
+  <!-- Infinite Omnidirectional Viewport -->
+  <main class="infinite-viewport" id="viewport" aria-label="Infinite Art Journal Grid">
+    <div class="tile-layer" id="tileLayer"></div>
+  </main>
+
+  <!-- Editorial Footer Telemetry -->
+  <footer class="hud-footer">
+    <div class="hud-telemetry" id="coordDisplay">POS 0000, 0000 &bull; 12 CHAPTERS</div>
+    <div class="hud-hint">
+      <span class="pulse-dot"></span>
+      <span>Scroll, drag, or use arrow keys &bull; Click any card to flip</span>
+    </div>
+  </footer>
+
+  <!-- Full Chapter Reader Modal -->
+  <div class="reader-modal" id="readerModal" role="dialog" aria-modal="true" aria-labelledby="readerTitle">
+    <div class="reader-sheet">
+      <div class="reader-image-pane">
+        <img id="readerImg" src="" alt="" />
+      </div>
+      <div class="reader-content-pane">
+        <div>
+          <div class="reader-top">
+            <span id="readerMeta">CH. 01 — TOKYO</span>
+            <button class="reader-close" id="readerCloseBtn" type="button">ESC / CLOSE</button>
+          </div>
+          <h3 class="reader-title" id="readerTitle">Chapter Title</h3>
+          <div class="reader-jp" id="readerJp">日本語タイトル</div>
+          <p class="reader-text" id="readerStory"></p>
+        </div>
+
+        <div class="reader-nav">
+          <button type="button" id="readerPrevBtn">&larr; Previous</button>
+          <button type="button" id="readerNextBtn">Next &rarr;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /**
+     * ==========================================================================
+     * INFINITE 2D JOURNAL ENGINE (HALF OF EIGHT STYLE)
+     * - Omnidirectional virtualized grid (renders only visible cards + buffer)
+     * - Smooth inertia / momentum physics for mouse drag, touch swipe, wheel, & keys
+     * - Independent 3D Y-axis card flipping stored per virtual grid coordinate (col, row)
+     * ==========================================================================
+     */
+
+    // 1. Curated 12-Chapter Zine Dataset (4x3 base matrix repeated infinitely)
+    const JOURNAL_ENTRIES = [
+      {
+        id: 'CH. 01',
+        title: 'Morning Steam in Yanaka',
+        jp: '谷中の朝霧',
+        location: 'Taito-ku, Tokyo',
+        date: 'NOV 2025',
+        image: 'https://images.unsplash.com/photo-1542051841857-5f90071e7989?auto=format&fit=crop&w=800&q=80',
+        excerpt: 'At 6:15 AM, cedar shutters slide open along narrow residential lanes while vending machines hum in pale blue light.',
+        fullStory: 'At 6:15 AM, cedar shutters slide open along narrow residential lanes while vending machines hum in pale blue light. Walking through Yanaka before the commuter rush reveals a quiet choreography of hand-painted metal signage, damp cobblestones, and fresh coffee drifting from a four-seat kissaten.'
+      },
+      {
+        id: 'CH. 02',
+        title: 'Concrete & Moss',
+        jp: 'コンクリートと苔',
+        location: 'Kyoto, Japan',
+        date: 'OCT 2025',
+        image: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=800&q=80',
+        excerpt: 'Brutalist board-formed concrete walls softened over decades by cedar shade and emerald velvet moss.',
+        fullStory: 'Brutalist board-formed concrete walls softened over decades by cedar shade and emerald velvet moss. In Kyoto, modernist architecture rarely fights the humidity; instead, raw aggregate absorbs the rain and becomes a living canvas.'
+      },
+      {
+        id: 'CH. 03',
+        title: 'Neon Rain on Showa Glass',
+        jp: '昭和の雨灯り',
+        location: 'Shinjuku, Tokyo',
+        date: 'SEP 2025',
+        image: 'https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=800&q=80',
+        excerpt: 'Refractions of vermilion lanterns across textured privacy glass after a sudden autumn downpour.',
+        fullStory: 'Refractions of vermilion lanterns across textured privacy glass after a sudden autumn downpour. Frosted floral glass panes from the 1970s turn ordinary street lamps into painterly blocks of warm amber and crimson.'
+      },
+      {
+        id: 'CH. 04',
+        title: 'Tidal Concrete Horizon',
+        jp: '水平線の記憶',
+        location: 'Naoshima, Kagawa',
+        date: 'AUG 2025',
+        image: 'https://images.unsplash.com/photo-1528360983277-13d401cdc186?auto=format&fit=crop&w=800&q=80',
+        excerpt: 'Where geometric architectural apertures frame the Seto Inland Sea like a minimalist woodblock print.',
+        fullStory: 'Where geometric architectural apertures frame the Seto Inland Sea like a minimalist woodblock print. Stepping out of subterranean galleries into blinding coastal sunlight resets your sense of scale and silence.'
+      },
+      {
+        id: 'CH. 05',
+        title: 'Vertical Typography',
+        jp: '縦書きの街角',
+        location: 'Jimbocho, Tokyo',
+        date: 'JUL 2025',
+        image: 'https://images.unsplash.com/photo-1524413840807-0c3cb6fa808d?auto=format&fit=crop&w=800&q=80',
+        excerpt: 'Hand-lettered bookshop spines and enameled steel address plaques stacked in tight rhythmic columns.',
+        fullStory: 'Hand-lettered bookshop spines and enameled steel address plaques stacked in tight rhythmic columns. Jimbocho rewards looking upward—where three generations of typographic craft coexist on a single facade.'
+      },
+      {
+        id: 'CH. 06',
+        title: 'Cedar Shadow Study',
+        jp: '杉と陰翳',
+        location: 'Nara Prefecture',
+        date: 'JUN 2025',
+        image: 'https://images.unsplash.com/photo-1492571350019-22de08371fd3?auto=format&fit=crop&w=800&q=80',
+        excerpt: 'Afternoon sunlight slicing through ancient cryptomeria trunks onto weathered wooden verandas.',
+        fullStory: 'Afternoon sunlight slicing through ancient cryptomeria trunks onto weathered wooden verandas. As Junichiro Tanizaki observed, beauty here lives not in direct glare, but in the gradations of shadow.'
+      },
+      {
+        id: 'CH. 07',
+        title: 'Night Ferry Crossing',
+        jp: '夜行フェリー',
+        location: 'Seto Inland Sea',
+        date: 'MAY 2025',
+        image: 'https://images.unsplash.com/photo-1536098561742-ca998e48cbcc?auto=format&fit=crop&w=800&q=80',
+        excerpt: 'Low engine vibration, canned hot coffee on the upper deck, and distant lighthouse beacons.',
+        fullStory: 'Low engine vibration, canned hot coffee on the upper deck, and distant lighthouse beacons. Between islands, time stretches into a gentle mechanical rhythm.'
+      },
+      {
+        id: 'CH. 08',
+        title: 'Porcelain & Copper',
+        jp: '磁器と銅の道具',
+        location: 'Kanazawa, Ishikawa',
+        date: 'APR 2025',
+        image: 'https://images.unsplash.com/photo-1545569341-9eb8b30979d9?auto=format&fit=crop&w=800&q=80',
+        excerpt: 'Patina earned through forty years of daily pour-overs behind a single slab of hinoki cypress.',
+        fullStory: 'Patina earned through forty years of daily pour-overs behind a single slab of hinoki cypress. Every tool on the counter bears the subtle indentation of its maker’s hand.'
+      },
+      {
+        id: 'CH. 09',
+        title: 'Suburban Rail Crossing',
+        jp: '踏切の夕暮れ',
+        location: 'Kamakura, Kanagawa',
+        date: 'MAR 2025',
+        image: 'https://images.unsplash.com/photo-1513407030348-c983a97b98d8?auto=format&fit=crop&w=800&q=80',
+        excerpt: 'Two-car green trains gliding past residential gardens toward the Pacific surf.',
+        fullStory: 'Two-car green trains gliding past residential gardens toward the Pacific surf. The rhythmic chime of the crossing bell signals the transition from coastal haze to indigo dusk.'
+      },
+      {
+        id: 'CH. 10',
+        title: 'Paper Lantern Geometry',
+        jp: '提灯の輪郭',
+        location: 'Asakusa, Tokyo',
+        date: 'FEB 2025',
+        image: 'https://images.unsplash.com/photo-1526481280693-3bfa7568e0f3?auto=format&fit=crop&w=800&q=80',
+        excerpt: 'Split bamboo ribs wrapped in translucent washi paper glowing softly against winter twilight.',
+        fullStory: 'Split bamboo ribs wrapped in translucent washi paper glowing softly against winter twilight. Up close, the brush calligraphy reveals confident, unhurried strokes.'
+      },
+      {
+        id: 'CH. 11',
+        title: 'Mountain Mist Switchbacks',
+        jp: '霧の峠道',
+        location: 'Hakone, Kanagawa',
+        date: 'JAN 2025',
+        image: 'https://images.unsplash.com/photo-1480796927426-f609979314bd?auto=format&fit=crop&w=800&q=80',
+        excerpt: 'Yellow guardrails emerging from low cloud cover along silent cedar mountain passes.',
+        fullStory: 'Yellow guardrails emerging from low cloud cover along silent cedar mountain passes. Cold mountain air carries the scent of damp pine needles and sulfur springs.'
+      },
+      {
+        id: 'CH. 12',
+        title: 'Midnight Ramen Counter',
+        jp: '深夜の暖簾',
+        location: 'Fukuoka, Kyushu',
+        date: 'DEC 2024',
+        image: 'https://images.unsplash.com/photo-1554797589-7241bb691973?auto=format&fit=crop&w=800&q=80',
+        excerpt: 'A cotton noren curtain fluttering beside the river while broth simmers past midnight.',
+        fullStory: 'A cotton noren curtain fluttering beside the river while broth simmers past midnight. Strangers sit shoulder to shoulder in warm steam before disappearing into the cold night.'
+      }
+    ];
+
+    // 2. DOM References
+    const viewport = document.getElementById('viewport');
+    const tileLayer = document.getElementById('tileLayer');
+    const coordDisplay = document.getElementById('coordDisplay');
+    const introOverlay = document.getElementById('introOverlay');
+    const startExploringBtn = document.getElementById('startExploringBtn');
+    const flipAllBtn = document.getElementById('flipAllBtn');
+    const resetPosBtn = document.getElementById('resetPosBtn');
+
+    // Reader Modal Elements
+    const readerModal = document.getElementById('readerModal');
+    const readerImg = document.getElementById('readerImg');
+    const readerMeta = document.getElementById('readerMeta');
+    const readerTitle = document.getElementById('readerTitle');
+    const readerJp = document.getElementById('readerJp');
+    const readerStory = document.getElementById('readerStory');
+    const readerCloseBtn = document.getElementById('readerCloseBtn');
+    const readerPrevBtn = document.getElementById('readerPrevBtn');
+    const readerNextBtn = document.getElementById('readerNextBtn');
+
+    // 3. Engine State
+    const state = {
+      // Camera coordinates (in pixels)
+      x: 0,
+      y: 0,
+      targetX: 0,
+      targetY: 0,
+      vx: 0,
+      vy: 0,
+      // Pointer tracking
+      isDragging: false,
+      dragMoved: false,
+      lastPointerX: 0,
+      lastPointerY: 0,
+      downX: 0,
+      downY: 0,
+      // Layout metrics (updated dynamically on resize)
+      cardW: 280,
+      cardH: 373,
+      gap: 28,
+      cellW: 308,
+      cellH: 401,
+      // Virtual DOM pool & flipped state map
+      activeNodes: new Map(), // key: "col,row" -> DOMElement
+      flippedCells: new Set(), // key: "col,row"
+      globalFlipped: false,
+      activeModalIndex: 0
+    };
+
+    // Deterministic positive modulo for negative infinite coordinates
+    function mod(n, m) {
+      return ((n % m) + m) % m;
+    }
+
+    // Map any infinite grid coordinate (col, row) to one of the 12 chapters
+    // Uses a 4-column stagger so adjacent rows feel organic rather than repetitive
+    function getEntryForCell(col, row) {
+      const colsPerPeriod = 4;
+      const staggeredIndex = mod(col + row * 2, JOURNAL_ENTRIES.length);
+      return {
+        entry: JOURNAL_ENTRIES[staggeredIndex],
+        entryIndex: staggeredIndex
+      };
+    }
+
+    // Measure CSS custom properties so JS physics match responsive CSS variables
+    function updateGridMetrics() {
+      const probe = document.createElement('div');
+      probe.style.cssText = 'position:fixed;visibility:hidden;width:var(--card-w);height:var(--card-h);margin-left:var(--grid-gap);';
+      document.body.appendChild(probe);
+      const styles = getComputedStyle(probe);
+      state.cardW = parseFloat(styles.width) || 280;
+      state.cardH = parseFloat(styles.height) || 373;
+      state.gap = parseFloat(styles.marginLeft) || 28;
+      document.body.removeChild(probe);
+
+      state.cellW = state.cardW + state.gap;
+      state.cellH = state.cardH + state.gap;
+    }
+
+    // Center the initial grid nicely in the viewport
+    function centerCamera(immediate = false) {
+      const offsetX = (window.innerWidth - state.cardW) * 0.5;
+      const offsetY = (window.innerHeight - state.cardH) * 0.5;
+      state.targetX = offsetX;
+      state.targetY = offsetY;
+      state.vx = 0;
+      state.vy = 0;
+      if (immediate) {
+        state.x = offsetX;
+        state.y = offsetY;
+      }
+    }
+
+    // Create a single 3x4 flipping card DOM element
+    function createCardElement(col, row, key) {
+      const { entry, entryIndex } = getEntryForCell(col, row);
+      const isFlipped = state.flippedCells.has(key);
+
+      const slot = document.createElement('article');
+      slot.className = 'journal-slot';
+      slot.dataset.key = key;
+      slot.dataset.entryIndex = entryIndex;
+
+      slot.innerHTML = `
+        <div class="journal-card ${isFlipped ? 'is-flipped' : ''}">
+          <!-- FRONT: 3:4 Artwork Snapshot -->
+          <div class="card-face card-front">
+            <div class="card-media">
+              <img
+                src="${entry.image}"
+                alt="${entry.title}"
+                loading="lazy"
+                onerror="this.onerror=null;this.src='https://placehold.co/600x800/e6e2d8/161615?text=${encodeURIComponent(entry.id)}';"
+              />
+              <span class="card-badge">${entry.id}</span>
+              <span class="card-flip-cue" title="Flip card">&#8635;</span>
+              <div class="card-front-footer">
+                <h2 class="card-front-title">${entry.title}</h2>
+                <span class="card-front-jp">${entry.jp}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- BACK: Accompanying Field Story -->
+          <div class="card-face card-back">
+            <div class="back-header">
+              <span class="back-chapter">${entry.id}</span>
+              <span>${entry.date}</span>
+            </div>
+            <div class="back-body">
+              <div class="back-jp-heading">${entry.jp}</div>
+              <h3 class="back-title">${entry.title}</h3>
+              <p class="back-story">${entry.excerpt}</p>
+            </div>
+            <div class="back-footer">
+              <span>${entry.location}</span>
+              <button type="button" class="expand-story-btn" data-read-index="${entryIndex}">Read Note</button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      return slot;
+    }
+
+    // Virtualized Grid Renderer: mounts visible cells and recycles off-screen cells
+    function renderVisibleGrid() {
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const buffer = 1; // 1 extra ring of cards outside viewport for seamless scrolling
+
+      const startCol = Math.floor(-state.x / state.cellW) - buffer;
+      const endCol = Math.floor((vw - state.x) / state.cellW) + buffer;
+      const startRow = Math.floor(-state.y / state.cellH) - buffer;
+      const endRow = Math.floor((vh - state.y) / state.cellH) + buffer;
+
+      const neededKeys = new Set();
+
+      for (let row = startRow; row <= endRow; row++) {
+        for (let col = startCol; col <= endCol; col++) {
+          const key = `${col},${row}`;
+          neededKeys.add(key);
+
+          let slot = state.activeNodes.get(key);
+          if (!slot) {
+            slot = createCardElement(col, row, key);
+            tileLayer.appendChild(slot);
+            state.activeNodes.set(key, slot);
+          }
+
+          // Position each card smoothly in world space
+          const worldX = col * state.cellW;
+          const worldY = row * state.cellH;
+          slot.style.transform = `translate3d(${worldX}px, ${worldY}px, 0)`;
+        }
+      }
+
+      // Remove cards that have scrolled outside the buffer zone
+      for (const [key, slot] of state.activeNodes.entries()) {
+        if (!neededKeys.has(key)) {
+          slot.remove();
+          state.activeNodes.delete(key);
+        }
+      }
+
+      // Translate parent container
+      tileLayer.style.transform = `translate3d(${state.x}px, ${state.y}px, 0)`;
+
+      // Update HUD coordinates
+      const normX = Math.round(-state.x);
+      const normY = Math.round(-state.y);
+      coordDisplay.textContent = `POS ${String(normX).padStart(4, '0')}, ${String(normY).padStart(4, '0')} • 12 CHAPTERS`;
+    }
+
+    // 4. Animation Loop with Smooth Damping & Inertia
+    function animate() {
+      if (!state.isDragging) {
+        // Apply momentum velocity
+        state.targetX += state.vx;
+        state.targetY += state.vy;
+
+        // Friction decay
+        state.vx *= 0.92;
+        state.vy *= 0.92;
+
+        if (Math.abs(state.vx) < 0.01) state.vx = 0;
+        if (Math.abs(state.vy) < 0.01) state.vy = 0;
+      }
+
+      // Smooth spring interpolation toward target position
+      state.x += (state.targetX - state.x) * 0.14;
+      state.y += (state.targetY - state.y) * 0.14;
+
+      renderVisibleGrid();
+      requestAnimationFrame(animate);
+    }
+
+    // 5. Pointer / Drag / Tap-to-Flip Interactions
+    viewport.addEventListener('pointerdown', (e) => {
+      if (e.button !== 0 && e.pointerType === 'mouse') return;
+      state.isDragging = true;
+      state.dragMoved = false;
+      state.lastPointerX = e.clientX;
+      state.lastPointerY = e.clientY;
+      state.downX = e.clientX;
+      state.downY = e.clientY;
+      state.vx = 0;
+      state.vy = 0;
+      viewport.classList.add('is-dragging');
+    });
+
+    window.addEventListener('pointermove', (e) => {
+      if (!state.isDragging) return;
+      const dx = e.clientX - state.lastPointerX;
+      const dy = e.clientY - state.lastPointerY;
+
+      if (Math.hypot(e.clientX - state.downX, e.clientY - state.downY) > 6) {
+        state.dragMoved = true;
+      }
+
+      state.targetX += dx;
+      state.targetY += dy;
+      state.vx = dx * 0.85;
+      state.vy = dy * 0.85;
+
+      state.lastPointerX = e.clientX;
+      state.lastPointerY = e.clientY;
+    });
+
+    window.addEventListener('pointerup', (e) => {
+      if (!state.isDragging) return;
+      state.isDragging = false;
+      viewport.classList.remove('is-dragging');
+
+      // If pointer barely moved, treat as an intentional click/tap
+      if (!state.dragMoved) {
+        const readBtn = e.target.closest('[data-read-index]');
+        if (readBtn) {
+          openReaderModal(Number(readBtn.dataset.readIndex));
+          return;
+        }
+
+        const slot = e.target.closest('.journal-slot');
+        if (slot) {
+          toggleCardFlip(slot);
+        }
+      }
+    });
+
+    // Trackpad / Mouse Wheel Omnidirectional Scrolling
+    viewport.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      // Support Shift+Wheel for horizontal pan on standard mice
+      const deltaX = e.shiftKey && e.deltaX === 0 ? e.deltaY : e.deltaX;
+      const deltaY = e.shiftKey && e.deltaX === 0 ? 0 : e.deltaY;
+
+      state.targetX -= deltaX * 1.15;
+      state.targetY -= deltaY * 1.15;
+      state.vx = 0;
+      state.vy = 0;
+    }, { passive: false });
+
+    // Keyboard Arrow Navigation & Spacebar Flip
+    window.addEventListener('keydown', (e) => {
+      if (readerModal.classList.contains('is-open')) {
+        if (e.key === 'Escape') closeReaderModal();
+        if (e.key === 'ArrowRight') navigateModal(1);
+        if (e.key === 'ArrowLeft') navigateModal(-1);
+        return;
+      }
+
+      const step = state.cellW * 0.85;
+      switch (e.key) {
+        case 'ArrowLeft':
+          state.targetX += step;
+          break;
+        case 'ArrowRight':
+          state.targetX -= step;
+          break;
+        case 'ArrowUp':
+          state.targetY += step;
+          break;
+        case 'ArrowDown':
+          state.targetY -= step;
+          break;
+        case 'Escape':
+          introOverlay.classList.add('is-hidden');
+          break;
+      }
+    });
+
+    // Toggle 3D flip on an individual card
+    function toggleCardFlip(slot) {
+      const key = slot.dataset.key;
+      const card = slot.querySelector('.journal-card');
+      if (!card) return;
+
+      if (state.flippedCells.has(key)) {
+        state.flippedCells.delete(key);
+        card.classList.remove('is-flipped');
+      } else {
+        state.flippedCells.add(key);
+        card.classList.add('is-flipped');
+      }
+    }
+
+    // Flip all currently mounted cards at once
+    flipAllBtn.addEventListener('click', () => {
+      state.globalFlipped = !state.globalFlipped;
+      for (const [key, slot] of state.activeNodes.entries()) {
+        const card = slot.querySelector('.journal-card');
+        if (state.globalFlipped) {
+          state.flippedCells.add(key);
+          card?.classList.add('is-flipped');
+        } else {
+          state.flippedCells.delete(key);
+          card?.classList.remove('is-flipped');
+        }
+      }
+      flipAllBtn.querySelector('span').textContent = state.globalFlipped ? 'Show Art' : 'Flip All';
+    });
+
+    // Smoothly return camera to origin
+    resetPosBtn.addEventListener('click', () => {
+      centerCamera(false);
+    });
+
+    // Dismiss Intro Overlay
+    startExploringBtn.addEventListener('click', () => {
+      introOverlay.classList.add('is-hidden');
+    });
+
+    // 6. Full Story Reader Modal Logic
+    function openReaderModal(index) {
+      state.activeModalIndex = mod(index, JOURNAL_ENTRIES.length);
+      const entry = JOURNAL_ENTRIES[state.activeModalIndex];
+
+      readerImg.src = entry.image;
+      readerImg.alt = entry.title;
+      readerMeta.textContent = `${entry.id} — ${entry.location.toUpperCase()} (${entry.date})`;
+      readerTitle.textContent = entry.title;
+      readerJp.textContent = entry.jp;
+      readerStory.textContent = entry.fullStory;
+
+      readerModal.classList.add('is-open');
+    }
+
+    function closeReaderModal() {
+      readerModal.classList.remove('is-open');
+    }
+
+    function navigateModal(dir) {
+      openReaderModal(state.activeModalIndex + dir);
+    }
+
+    readerCloseBtn.addEventListener('click', closeReaderModal);
+    readerPrevBtn.addEventListener('click', () => navigateModal(-1));
+    readerNextBtn.addEventListener('click', () => navigateModal(1));
+    readerModal.addEventListener('click', (e) => {
+      if (e.target === readerModal) closeReaderModal();
+    });
+
+    // Handle Viewport Resize
+    window.addEventListener('resize', () => {
+      updateGridMetrics();
+      renderVisibleGrid();
+    });
+
+    // Initialize on load
+    window.addEventListener('load', () => {
+      updateGridMetrics();
+      centerCamera(true);
+      renderVisibleGrid();
+      animate();
+    });
+  </script>
+</body>
+</html>

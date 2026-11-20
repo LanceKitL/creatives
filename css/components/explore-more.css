@@ -1,0 +1,75 @@
+/* ==========================================================================
+   EXPLORE MORE — Zoom-Out Transition to Journal
+   ========================================================================== */
+.explore-more-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6rem 2rem 10rem;
+  position: relative;
+  z-index: 1;
+}
+
+.explore-more-btn {
+  appearance: none;
+  background: transparent;
+  border: 2px solid rgb(206, 206, 109);
+  color: rgb(206, 206, 109);
+  padding: 1.2rem 3rem;
+  font-family: "Redaction 20", serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  border-radius: 4px;
+}
+
+.explore-more-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgb(206, 206, 109);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: -1;
+}
+
+.explore-more-btn:hover {
+  color: #034223;
+  border-color: rgb(206, 206, 109);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(206, 206, 109, 0.15);
+}
+
+.explore-more-btn:hover::before {
+  transform: scaleX(1);
+}
+
+/* Zoom-out page transition */
+body {
+  transform-origin: 50% 50%;
+  transition:
+    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.75s ease;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+.page-zoom-out {
+  transform: scale(0.86) translateZ(0);
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body {
+    transition: opacity 0.25s linear;
+  }
+  .page-zoom-out {
+    transform: none;
+  }
+}

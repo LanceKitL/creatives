@@ -5,6 +5,7 @@
 @import url(./components/project_card.css);
 @import url(./components/contact.css);
 @import url(./components//footer.css);
+@import url(./components/explore-more.css);
 
 *{
     padding: 0;

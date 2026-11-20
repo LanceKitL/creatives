@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Gallery — Kit Creatives</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Redaction+20:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Journal Styles (separate CSS) -->
+  <link rel="stylesheet" href="./css/components/journal.css" />
+</head>
+<body>
+  <div class="paper-grain"></div>
+
+  <!-- Minimalist Header — no "Flip All", no "Half of the Journal" -->
+  <header class="hud-header">
+    <div class="hud-brand">
+      <span class="hud-accent">⚭ Gallery</span>
+      <h1 class="hud-title">WELCOME TO MY WORLD</h1>
+    </div>
+
+    <div class="hud-actions">
+      <a class="hud-btn" href="./index.html" title="Back to Portfolio">
+        <span><img src="./assets/icons/back-square-svgrepo-com.svg" alt="arrow_back" width="20"></span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Intro Overlay -->
+  <section class="intro-overlay" id="introOverlay" aria-label="Journal Introduction">
+    <div class="intro-card">
+      <div class="intro-accent">⚭ GALLERY</div>
+      <h2 class="intro-heading">WELCOME TO MY WORLD</h2>
+      <p class="intro-desc">
+        An infinite 2D canvas displaying visual snapshots and their accompanying stories on the flip side. Drag, scroll, or use arrow keys to explore endlessly. Click any card to flip it.
+      </p>
+      <div class="intro-meta">
+        <span>Drag / Scroll</span>
+        <span>Arrow Keys</span>
+        <span>Tap Card to Flip</span>
+      </div>
+      <button class="start-btn" id="startExploringBtn" type="button">Start Exploring</button>
+    </div>
+  </section>
+
+  <!-- Infinite Viewport -->
+  <main class="infinite-viewport" id="viewport" aria-label="Infinite Art Journal Grid">
+    <div class="tile-layer" id="tileLayer"></div>
+  </main>
+
+  <!-- Footer Telemetry -->
+  <footer class="hud-footer">
+    <div class="hud-hint">
+      <span class="pulse-dot"></span>
+      <span>CTRL: SCROLL, DRAG, ARROW KEYS</span>
+    </div>
+  </footer>
+
+  <!-- Reader Modal -->
+  <div class="reader-modal" id="readerModal" role="dialog" aria-modal="true" aria-labelledby="readerTitle">
+    <div class="reader-sheet">
+      <div class="reader-image-pane">
+        <img id="readerImg" src="" alt="" />
+      </div>
+      <div class="reader-content-pane">
+        <div>
+          <div class="reader-top">
+            <span id="readerMeta">CH. 01 — TOKYO</span>
+            <button class="reader-close" id="readerCloseBtn" type="button">ESC / CLOSE</button>
+          </div>
+          <h3 class="reader-title" id="readerTitle">Chapter Title</h3>
+          <div class="reader-sub" id="readerSub">Location</div>
+          <p class="reader-text" id="readerStory"></p>
+        </div>
+
+        <div class="reader-nav">
+          <button type="button" id="readerPrevBtn">&larr; Previous</button>
+          <button type="button" id="readerNextBtn">Next &rarr;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Journal Engine (separate JS) -->
+  <script src="./js/journal.js"></script>
+</body>
+</html>

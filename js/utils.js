@@ -57,5 +57,23 @@ function displayProject(el, idx){
 function closeProject(){
     document.body.style.overflowY = "auto";
     pop_up.style.display = "none";
+}
 
+// ==========================================================================
+// EXPLORE MORE — Zoom-out transition to journal
+// ==========================================================================
+const exploreBtn = document.getElementById('exploreMoreBtn');
+if (exploreBtn) {
+    exploreBtn.addEventListener('click', () => {
+        // Zoom out from the center of the visible viewport (not the whole page),
+        // so the transition doesn't jump when the button is below the fold.
+        const originY = window.scrollY + window.innerHeight / 2;
+        document.body.style.transformOrigin = `50% ${originY}px`;
+        document.body.classList.add('page-zoom-out');
+
+        // Navigate once the transition has finished
+        setTimeout(() => {
+            window.location.href = './journal.html';
+        }, 780);
+    });
 }

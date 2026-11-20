@@ -7,10 +7,10 @@ footer{
 }
 
 .footer_name{
-    position: absolute;
-    bottom: -6.5rem;
-    left: 4.5rem;
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 1rem;
 
     h1{
         color: #034c28;
@@ -19,3 +19,4 @@ footer{
         font-size: 20vw;
     }
 }
+/* REM, PX, VW */

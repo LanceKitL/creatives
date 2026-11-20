@@ -2,6 +2,7 @@
 
 let cards = document.querySelectorAll(".card");
 let pop_up = document.querySelector("#pop_up");
+let project_content = document.querySelector("#project_content")
 
 let projects = [
     {
@@ -43,12 +44,12 @@ cards.forEach((el, idx) => {
 function displayProject(el, idx){
     projects.forEach(proj => {
         if(idx === proj.id){
-            console.log(proj.title);
-            pop_up.append = proj.title;
             pop_up.style.display = "grid";
             pop_up.style.background = "black";
             pop_up.style.zIndex = 999999999999  ;
-            document.body.style.overflowY    = "hidden";
+            document.body.style.overflowY = "hidden";
+            console.log(proj);
+            project_content += proj.title;
         }
     });
 }
